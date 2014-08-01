@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Queuing demo</title>
+	<link rel="stylesheet" href="animation.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h2>Queued elements</h2>
+	<div class="row transition hide">
+		<h3>default</h3>
+		<div data-queue data-queue-position="1">1</div>
+		<div data-queue data-queue-position="2">2</div>
+		<div data-queue data-queue-position="3">3</div>
+		<div data-queue data-queue-position="4">4</div>
+		<div data-queue data-queue-position="5">5</div>
+	</div>
+	<div class="row custom-class">
+		<h3>custom - class</h3>
+		<div data-queue data-queue-position="1:bounce">1</div>
+		<div data-queue data-queue-position="5:zoomInUp">5</div>
+		<div data-queue data-queue-position="3:flipInX">3</div>
+		<div data-queue data-queue-position="2:swing">2</div>
+		<div data-queue data-queue-position="4:rollIn">4</div>
+	</div>
+	<div class="row hide transition">
+		<h3>custom - functions</h3>
+		<div data-queue data-queue-position="5" data-queue-animation="demo">5</div>
+		<div data-queue data-queue-position="4" data-queue-animation="demo">4</div>
+		<div data-queue data-queue-position="3" data-queue-animation="demo">3</div>
+		<div data-queue data-queue-position="2" data-queue-animation="demo">2</div>
+		<div data-queue data-queue-position="1" data-queue-animation="demo">1</div>
+	</div>
+	<h2>Grouped queues</h2>
+	<div class="row hide transition">
+		<h3>default - delayed</h3>
+		<span>Check scripts.js</span>
+		<div data-queue data-queue-position="demo-group:1">1</div>
+		<div data-queue data-queue-position="demo-group:2">2</div>
+		<div data-queue data-queue-position="demo-group:3">3</div>
+		<div data-queue data-queue-position="demo-group:4">4</div>
+		<div data-queue data-queue-position="demo-group:5">5</div>
+	</div>
+	<div class="row hide">
+		<h3>raf</h3>
+		<span>Check scripts.js - runs in raf</span>
+		<span id="trigger-raf">Click here to run!</span>
+		<div data-queue data-queue-position="raf-group:1" data-queue-animation="raf">1</div>
+		<div data-queue data-queue-position="raf-group:2" data-queue-animation="raf" data-queue-property='1000'>2</div>
+		<div data-queue data-queue-position="raf-group:3" data-queue-animation="raf" data-queue-property='-2000'>3</div>
+		<div data-queue data-queue-position="raf-group:4" data-queue-animation="raf">4</div>
+		<div data-queue data-queue-position="raf-group:5" data-queue-animation="raf">5</div>
+	</div>
+	<script src="queue.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
