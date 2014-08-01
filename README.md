@@ -10,8 +10,9 @@ There's a ton of different ways of animating elements. In some cases a simple CS
 #### CSS animations
 ```html
 <style>
-.box{
+div{
 	opacity: 0;
+	background: red;
 	transition: 3s;
 }
 /* Default if no animation is assigned */
@@ -22,39 +23,47 @@ There's a ton of different ways of animating elements. In some cases a simple CS
 	animation: scaleUp 3s;
 }
 </style>
+
+<div data-queue>
+	I'll fade in first!
+</div>
+
+<div data-queue 
+	 data-queue-position="1"
+	 data-queue-animation="scaleUp">
+	Let me just wait until the first elements are done animating
+</div>
 ```
 #### JavaScript animations
 ```html
+<div data-queue 
+	 data-queue-position="groupName"
+	 data-queue-animation="changeBG">
+	I'll just wait until my group is run...
+
+	<div data-queue
+		 data-queue-position="groupName:3" 
+		 data-queue-animation="changeBG">
+		I'm the third in my group
+	</div>
+</div>
+
 <script>
 	var queue = Queue();
-	document.getElementById('trigger-favorite-group').addEventListener('click', queue.run('groupName'));
+	document.getElementById('trigger-favorite-group').addEventListener('click', function(){
+		queue.run('groupName');
+	});
 
+	// Animation function 'changeBG'
 	function changeBG (queueObject, complete) {
 		var element = queueObject.node;
 
 		element.style.background = "tomato";
 
+		// Continue with the queue
 		complete(queueObject);
 	}
 </script>
-```
-#### Queued DOM elements
-```html
-<div class="box" data-queue>
-	I'll fade in first!
-</div>
-
-<div class="box" data-queue data-queue-position="1" data-queue-animation="scaleUp">
-	Let me just wait until the first elements are done animating
-</div>
-
-<div class="box" data-queue data-queue-position="groupName" data-queue-animation="changeBG">
-	I'll just wait until my group is run...
-
-	<div class="box" data-queue data-queue-position="groupName:3" data-queue-animation="changeBG">
-		I'm the third in my group
-	</div>
-</div>
 ```
 The above is a samll example of how to animate using **transitions**, **animations** and **JavaScript**.
 
@@ -68,19 +77,22 @@ Being able to animate is only a small part of chaining animations together. Some
 ### Adding to the queue
 #### Multiple positions
 ```html
-<div data-queue data-queue-position="1,10,50">
+<div data-queue 
+	 data-queue-position="1,10,50">
 	I'm number 1, 10 and 50! Rock ON!
 </div>
 ```
 #### Multiple positions, different animations
 ```html
-<div data-queue data-queue-position="1:changeColor,1:scaleUp,5:scaleDown">
+<div data-queue 
+	 data-queue-position="1:changeColor,1:scaleUp,5:scaleDown">
 	'changeColor' and 'scaleUp' will get triggered at the same time, while 'scaleDown' will be the 6th
 </div>
 ```
 #### Multiple positions, groups and animations
 ```html
-<div data-queue data-queue-position="raf:rafAnimation,pageLoad:5,pageLoad:6:scale">
+<div data-queue
+	 data-queue-position="raf:rafAnimation,pageLoad:5,pageLoad:6:scale">
 	I'll be added to the 'raf' and 'pageLoad' group.
 	When the 'raf' group is run I'll use the 'rafAnimation' animation! 
 	Besides that I'll run twice through the pageLoad, 
@@ -126,17 +138,22 @@ The last thing I'll mention is **properties**. Being able to pass along with an 
 
 #### Animation function with properties
 ```html
-<div data-queue data-queue-animation="fade" data-queue-property="1000">
+<div data-queue
+	 data-queue-animation="fade" 
+	 data-queue-property="1000">
 	I'll fade in over the duration of 1 sec
 </div>
 
-<div data-queue data-queue-position="1:fade" data-queue-property="-3000">
+<div data-queue
+	 data-queue-position="1:fade" 
+	 data-queue-property="-3000">
 	I'll fade out, after the first div, over the duration of 3 sec
 </div>
 
 <script>
 	var queue = Queue();
 
+	// Animation function 'fade'
 	// duration: 400 -> fadeIn over 400ms
 	// duration: -1000 -> fadeOut over 1000ms
 	function fade(object, complete){
@@ -187,6 +204,7 @@ The last thing I'll mention is **properties**. Being able to pass along with an 
 
 		window[callback]();
 
+		// Continue with the queue
 		complete(object);
 	}
 
